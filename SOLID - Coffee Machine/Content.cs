@@ -41,5 +41,14 @@ namespace SOLID___Coffee_Machine
             Amount = quantity;
             Unit = unitOfMeasure;
         }
+
+        /// <summary>
+        /// Adds more to the content amount
+        /// </summary>
+        /// <param name="addedAmount">Amount to be added</param>
+        public void AddAmount(float addedAmount)
+        {
+            Amount += addedAmount;
+        }
     }
 }

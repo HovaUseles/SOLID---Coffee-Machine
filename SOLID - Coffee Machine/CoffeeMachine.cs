@@ -36,14 +36,14 @@ namespace SOLID___Coffee_Machine
         /// Container that holds the brewed coffee
         /// </summary>
         private Container coffeePot;
-        public Container MyProperty
+        public Container CoffeePot
         {
             get { return coffeePot; }
             private set { coffeePot = value; }
         }
 
         /// <summary>
-        /// Time it takes the coffee machine to brew coffee
+        /// Time in miliseconds it takes the coffee machine to brew coffee
         /// </summary>
         private int brewTime;
         public int BrewTime
@@ -53,7 +53,7 @@ namespace SOLID___Coffee_Machine
         }
 
         /// <summary>
-        /// Amount the coffee machine considers one cup
+        /// Amount in mililiters the coffee machine considers one cup
         /// </summary>
         private float cupSize;
         public float CupSize
@@ -66,8 +66,8 @@ namespace SOLID___Coffee_Machine
         /// Inializes an instance of the CoffeeMachine class, with a waterContainer, coffeeContainer and coffeePot. 
         /// Sets arguments time to brew and amountPerCup.
         /// </summary>
-        /// <param name="timeToBrew">Time it takes the machine to brew one cup of coffee.</param>
-        /// <param name="amountPerCup">The amount per cups the machine calculates from.</param>
+        /// <param name="timeToBrew">Time in miliseconds it takes the machine to brew one cup of coffee.</param>
+        /// <param name="amountPerCup">The amount in mililiters per cups the machine calculates from.</param>
         public CoffeeMachine(int timeToBrew, float amountPerCup)
         {
             BrewTime = timeToBrew;
@@ -96,9 +96,22 @@ namespace SOLID___Coffee_Machine
                 {
                     strength = "medium";
                 }
-
-                Coffee coffee = new Coffee(amount, strength);
-                coffeePot.Fill(coffee);
+                int cups = Convert.ToInt16(amount / CupSize);
+                Coffee coffee = new Coffee(0, strength);
+                for (int i = 1; i <= cups; i++)
+                {
+                    coffee.AddAmount(cupSize);
+                    Thread.Sleep(brewTime);
+                }
+                try
+                {
+                    coffeePot.Fill(coffee);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                waterContainer.Empty();
                 return coffeePot;
             }
             else
@@ -117,7 +130,7 @@ namespace SOLID___Coffee_Machine
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString());
+                throw ex;
             }
 
         }
@@ -129,7 +142,7 @@ namespace SOLID___Coffee_Machine
             if (waterContainer.Containing != null)
             {
                 Water water = (Water)waterContainer.Containing;
-                float tempChange = 1.4f;
+                float tempChange = 5.4f;
                 while (water.Tempeture < 92)
                 {
                     water.ChangeTempeture(tempChange);
@@ -156,7 +169,7 @@ namespace SOLID___Coffee_Machine
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 
@@ -174,7 +187,7 @@ namespace SOLID___Coffee_Machine
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 

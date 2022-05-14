@@ -49,7 +49,17 @@ namespace SOLID___Coffee_Machine
             if (containing == null)
             {
                 if (content.Amount < Capacity)
-                containing = content;
+                {
+                    containing = content;
+                }
+                else
+                {
+                    throw new Exception($"Container not large enough. \nCapacity: {capacity}\nAmount: {content.Amount}");
+                }
+            }
+            else
+            {
+                throw new Exception("Container already filled");
             }
         }
 
